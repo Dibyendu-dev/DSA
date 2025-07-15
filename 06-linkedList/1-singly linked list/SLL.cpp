@@ -73,15 +73,89 @@ bool checkIfPresent(Node *head, int val)
     return false;
 }
 
+Node* deleteHead(Node* head)
+{
+    if(head == NULL) return head;
+    Node *temp = head;
+    head = head->next;
+    free(temp);  // delete temp
+    return head;
+}
+
+Node* deleteTail(Node* head){
+    if ( head == NULL || head->next == NULL) return NULL;
+    Node* temp = head;
+    while ( temp->next->next != NULL){
+        temp= temp->next;
+    }
+    free (temp->next);
+    temp->next = nullptr ;
+    return head;
+}
+
+Node* deletekth(Node* head , int k){
+    if(head==NULL) return NULL;
+    if(k==1){
+    Node* temp = head;
+    head = head->next;
+    delete temp;
+    return head;
+    }
+    int cnt =0 ;
+    Node* prev =NULL ;
+    Node* temp = head;
+    while(temp != NULL){
+        cnt++;
+        if(cnt == k){
+            prev->next = prev->next->next;
+            free(temp);
+            break;
+        }
+        prev = temp;
+        temp= temp->next;
+    }
+    return head;
+}
+
+Node* deleteElments(Node* head , int val){
+    if(head==NULL) return NULL;
+    if(head->data == val){
+    Node* temp = head;
+    head = head->next;
+    delete temp;
+    return head;
+    }
+    
+    Node* prev =NULL ;
+    Node* temp = head;
+    while(temp != NULL){
+        
+        if(temp->data == val){
+            prev->next = prev->next->next;
+            free(temp);
+            break;
+        }
+        prev = temp;
+        temp= temp->next;
+    }
+    return head;
+}
+
 int main()
 {
-    vector<int> arr = {2, 5, 8};
+    vector<int> arr = {2, 5, 8 ,9};
 
     Node *head = convertArr2LL(arr);
-
-    // printLL(head);
+    
+    
+    printLL(head);
     // cout << lengthOfLL(head);
-    cout << checkIfPresent(head, 56);
+    // cout << checkIfPresent(head, 56);
+    // head = deleteHead(head);
+    // cout<< "head is :" <<head;
+    // head = deleteTail(head);
+    // head = deletekth(head ,10);
+    // head = deleteElments(head,5);
 
     return 0;
 }
