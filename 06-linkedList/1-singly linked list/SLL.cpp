@@ -141,13 +141,80 @@ Node* deleteElments(Node* head , int val){
     return head;
 }
 
+Node* insertHead(Node* head , int val){
+    Node* temp = new Node(val,head);
+    return temp;
+}
+
+Node* insertTail(Node* head , int val){
+    if(head == NULL){
+        return new Node(val);
+    }
+    Node* temp = head;
+    while(temp->next!=NULL){
+        temp = temp->next;
+    }
+    Node* newNode = new Node(val);
+    temp->next = newNode;
+    return head;
+}
+
+Node* insertkth(Node* head,int val,int k){
+    if(head == NULL){
+        if(k==1){
+        return new Node(val);
+        }else return NULL;
+    }
+    if(k==1){
+        Node* temp = new Node(val,head);
+        return temp;
+    }
+    int cnt = 0;
+    Node* temp = head;
+    while(temp!= NULL){
+        cnt++;
+        if(cnt == (k-1)){
+            Node* newNode = new Node(val);
+            newNode->next=temp->next;
+            temp->next=newNode;
+            break;
+        }
+        temp = temp->next;
+    }
+    return head;
+}
+
+Node* insertBeforeValue(Node* head,int el, int value){
+    if(head == NULL){
+         return NULL;
+    }
+    if(head->data == value){
+        Node* temp = new Node(el,head);
+        return temp;
+    }
+    
+    Node* temp = head;
+    while(temp->next!= NULL){
+        
+        if(temp->next->data == value){
+            Node* newNode = new Node(el);
+            newNode->next=temp->next;
+            temp->next=newNode;
+            break;
+        }
+        temp = temp->next;
+    }
+    return head;
+}
+
+
 int main()
 {
     vector<int> arr = {2, 5, 8 ,9};
 
     Node *head = convertArr2LL(arr);
     
-    
+    head = insertBeforeValue(head,101,8);
     printLL(head);
     // cout << lengthOfLL(head);
     // cout << checkIfPresent(head, 56);
@@ -156,6 +223,8 @@ int main()
     // head = deleteTail(head);
     // head = deletekth(head ,10);
     // head = deleteElments(head,5);
-
+    // head = insertHead(head,100);
+    // head = insertTail(head,55);
+    // head = insertkth(head,121,2);
     return 0;
 }
