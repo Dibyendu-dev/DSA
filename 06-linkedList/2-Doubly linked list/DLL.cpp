@@ -142,16 +142,68 @@ void deleteNode(Node *temp)
     delete temp;
 }
 
+Node* insertBeforeHead(Node* head, int val){
+    Node* newHead = new Node(val,nullptr,head);
+    head->back = newHead;
+    return newHead;
+}
+
+Node* insertBeforeTail(Node* head, int val){
+    if(head->next == NULL){
+        return insertBeforeHead(head,val);
+    }
+    Node* tail = head;
+    while(tail->next != NULL){
+        tail = tail->next;
+    }
+    Node* prev = tail->back;
+    Node* newNode = new Node(val,prev,tail);
+    prev->next = newNode;
+    tail->back = newNode;
+    return head;
+}
+
+Node* insertBeforeKthElements(Node* head,int k ,int val){
+    if(k==1){
+      return insertBeforeHead(head,val);
+    }
+    // traverse
+    Node* temp = head;
+    int cnt =0;
+    while(temp != NULL){
+        cnt++;
+        if(cnt == k) break;
+        temp = temp->next;
+    }
+    Node* prev = temp->back;
+    Node* newNode = new Node(val,prev,temp);
+    prev->next = newNode;
+    temp->back = newNode;
+    return head;
+}
+
+void inserBeforeNode(Node* node,int val){
+    Node* prev = node->back;
+    Node* newNode = new Node(val,prev,node);
+    prev->next =newNode;
+    node->back = newNode;
+}
+
 int main()
 {
     vector<int> arr = {5, 7, 9, 5};
     Node *head = convertArrToDLL(arr);
-
+    
+   
     printDLL(head);
 
     // head = deleteHead(head);
     //  head = deleteTail(head);
     // head = deleteKthElement(head,3);
-    deleteNode(head->next->next);
+    // deleteNode(head->next->next);
+    // head= insertBeforeHead(head,100);
+    // head = insertBeforeTail(head,5000);
+    //  head = insertBeforeKthElements(head,1,23);
+    // inserBeforeNode(head->next->next,555);
     return 0;
 }
