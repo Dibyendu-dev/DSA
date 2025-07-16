@@ -189,12 +189,25 @@ void inserBeforeNode(Node* node,int val){
     node->back = newNode;
 }
 
+Node* inserAtTail(Node* head,int val){
+ if(head == NULL){
+    return new Node(val);
+ }
+ Node* tail = head;
+ while(tail->next != NULL){
+    tail = tail->next;
+ }
+ Node* newNode = new Node(val,tail,nullptr);
+ tail->next = newNode;
+ return head;
+}
+
 int main()
 {
     vector<int> arr = {5, 7, 9, 5};
     Node *head = convertArrToDLL(arr);
     
-   
+   head = inserAtTail(head,321);
     printDLL(head);
 
     // head = deleteHead(head);
